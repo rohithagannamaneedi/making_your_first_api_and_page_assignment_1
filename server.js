@@ -1,6 +1,29 @@
 // Boilerplate Code for Virtual Assistant API
 const express = require('express');
 const app = express();
+app.get("/assistant/greet",(req,res)=>{
+  try{
+    const query=req.query;
+    if(!query.name){
+      req.status(400).send({message:"Please include name in url as query"});
+    }
+    const day = new Date();
+    console.log(day.getDay())
+    const dayArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+    
+    console.log(query)
+    res.status(200).send(
+      {
+        welcomeMessage: `Hello, ${query.name}! Welcome to our assistant app!`,
+        dayMessage: `Happy ${dayArray[day.getDay()]}! Start your week with energy!`
+      }
+    );
+
+  }catch(error)  {
+    res.status(500).send({message:"something went wrong",error:error});
+  }
+})
 
 /*
 Task:
